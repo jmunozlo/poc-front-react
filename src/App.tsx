@@ -1,21 +1,21 @@
 import { useState,useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
+import axios from 'axios'
 
 function App() {
   const API_URL = 'https://poc-nestjs.vercel.app/'
   const [count, setCount] = useState(0)
-  const [messages, setMessages] = useState('')
-  const getInfo = async () =>{
-    const response = await fetch(API_URL)
-    const data = await response.json()
-    console.log(data);
-    
-    setMessages(data.author)
-  }
+	const [messages, setMessages] = useState('')
 
-  useEffect(() => {
-		getInfo()
+	const fetchData = async () => {
+		const response = await axios.get(API_URL)
+		console.log(response)
+		setMessages(response.data.message)
+	}
+
+	useEffect(() => {
+		fetchData()
 	}, [])
   
   return (
